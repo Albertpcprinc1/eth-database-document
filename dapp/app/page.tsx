@@ -10,6 +10,7 @@ import {
   WalletCards,
 } from "lucide-react";
 import { DocumentRegistrationForm } from "@/components/DocumentRegistrationForm";
+import { DocumentVerificationPanel } from "@/components/DocumentVerificationPanel";
 import { useMetaMask } from "@/contexts/MetaMaskContext";
 import { useContract } from "@/hooks/useContract";
 
@@ -215,6 +216,8 @@ export default function Home() {
           </div>
         )}
         <DocumentRegistrationForm onStored={handleRefresh} />
+
+        <DocumentVerificationPanel />
       </div>
     </main>
   );
