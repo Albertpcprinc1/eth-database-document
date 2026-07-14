@@ -9,6 +9,7 @@ import {
   Unplug,
   WalletCards,
 } from "lucide-react";
+import { DocumentRegistrationForm } from "@/components/DocumentRegistrationForm";
 import { useMetaMask } from "@/contexts/MetaMaskContext";
 import { useContract } from "@/hooks/useContract";
 
@@ -213,6 +214,7 @@ export default function Home() {
             {error}
           </div>
         )}
+        <DocumentRegistrationForm onStored={handleRefresh} />
       </div>
     </main>
   );
