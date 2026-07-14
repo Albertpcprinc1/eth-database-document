@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { DocumentRegistrationForm } from "@/components/DocumentRegistrationForm";
 import { DocumentVerificationPanel } from "@/components/DocumentVerificationPanel";
+import { DocumentHistoryPanel } from "@/components/DocumentHistoryPanel";
 import { useMetaMask } from "@/contexts/MetaMaskContext";
 import { useContract } from "@/hooks/useContract";
 
@@ -37,6 +38,7 @@ export default function Home() {
 
   const [walletIndex, setWalletIndex] = useState(0);
   const [documentCount, setDocumentCount] = useState<bigint | null>(null);
+  const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -69,6 +71,10 @@ export default function Home() {
     }
   };
 
+  const handleStored = async () => {
+    await handleRefresh();
+    setHistoryRefreshKey((currentValue) => currentValue + 1);
+  };
   const handleDisconnect = () => {
     disconnect();
     setDocumentCount(null);
@@ -215,9 +221,14 @@ export default function Home() {
             {error}
           </div>
         )}
-        <DocumentRegistrationForm onStored={handleRefresh} />
+        <DocumentRegistrationForm onStored={handleStored} />
 
         <DocumentVerificationPanel />
+
+        <DocumentHistoryPanel
+          refreshKey={historyRefreshKey}
+          onCountChange={setDocumentCount}
+        />
       </div>
     </main>
   );

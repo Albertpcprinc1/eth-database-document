@@ -204,14 +204,19 @@ export function useContract() {
 
   const getAllDocuments = useCallback(async (): Promise<StoredDocument[]> => {
     const count = await getDocumentCount();
-    const documents: StoredDocument[] = [];
+    const indices: bigint[] = [];
 
     for (let index = 0n; index < count; index += 1n) {
-      const hash = await getDocumentHashByIndex(index);
-      documents.push(await getDocumentInfo(hash));
+      indices.push(index);
     }
 
-    return documents;
+    const hashes = await Promise.all(
+      indices.map((index) => getDocumentHashByIndex(index)),
+    );
+
+    return Promise.all(
+      hashes.map((hash) => getDocumentInfo(hash)),
+    );
   }, [getDocumentCount, getDocumentHashByIndex, getDocumentInfo]);
 
   return {
