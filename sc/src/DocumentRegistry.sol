@@ -35,7 +35,7 @@ contract DocumentRegistry {
     }
 
     /// @notice Stores a document hash together with its signature and signer.
-    /// @param _hash Keccak-256 hash of the original document bytes.
+    /// @param _hash SHA-256 hash of the original document bytes, calculated by the dApp.
     /// @param _timestamp Timestamp supplied by the application.
     /// @param _signature Ethereum signed-message signature of the document hash.
     /// @param _signer Address that created the signature.
